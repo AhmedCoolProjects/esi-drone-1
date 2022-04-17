@@ -3,16 +3,19 @@ import { Button, IconButton } from "@mui/material";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import React from "react";
 import { AiOutlineCloseSquare } from "react-icons/ai";
+import { Header } from "../src/components";
+import { addCoords, useAppDispatch, useAppSelector } from "../src/store";
 
 const containerStyle = {
   width: "100%",
-  height: "700px",
+  height: "620px",
+  position: "relative",
 };
 
 const center = { lat: 33.982115336278206, lng: -6.865274188820471 }; // ESI
 
 const onLoad2 = (marker) => {
-  console.log("marker: ", marker);
+  // console.log("marker: ", marker);
 };
 
 function ClientPage() {
@@ -32,49 +35,15 @@ function ClientPage() {
   const onUnmount = React.useCallback(function callback(map) {
     setMap(null);
   }, []);
+  const dispatch = useAppDispatch();
 
   const sendCoordToServer = () => {
-    console.log("sendCoordToServer", markers);
+    dispatch(addCoords(markers));
   };
   return isLoaded ? (
     <div>
-      <div
-        className="absolute top-4 right-20 py-2 px-4
-      bg-white rounded-lg z-10 items-center
-      "
-      >
-        <ul className="max-h-[200px] overflow-y-auto">
-          <li className="text-base mb-3 font-semibold">
-            Lattitude & Longitude:
-          </li>
-          {markers.map((marker) => (
-            <li
-              key={marker.id}
-              className="text-gray-700 
-                flex items-center flex-row
-                "
-            >
-              {marker.lat}, {marker.lng}
-              <IconButton
-                onClick={() => {
-                  setMarkers(
-                    markers.filter(
-                      (m) => m.lat !== marker.lat && m.lng !== marker.lng
-                    )
-                  );
-                }}
-                size="small"
-                className="ml-2"
-              >
-                <AiOutlineCloseSquare />
-              </IconButton>
-            </li>
-          ))}
-          <Button disabled={markers.length === 0} onClick={sendCoordToServer}>
-            Set Orders List
-          </Button>
-        </ul>
-      </div>
+      <Header />
+
       <GoogleMap
         id="google-map-scripts"
         mapContainerStyle={containerStyle}
@@ -83,7 +52,6 @@ function ClientPage() {
         onLoad={onLoad}
         onUnmount={onUnmount}
         onClick={(event) => {
-          console.log("yo yo yo: ", event.latLng.lat(), event.latLng.lng());
           setMarkers([
             ...markers,
             {
@@ -93,6 +61,43 @@ function ClientPage() {
           ]);
         }}
       >
+        <div
+          className="absolute top-4 right-20 py-2 px-4
+      bg-white rounded-lg z-10 items-center
+      "
+        >
+          <ul className="max-h-[200px] overflow-y-auto">
+            <li className="text-base mb-3 font-semibold">
+              Lattitude & Longitude:
+            </li>
+            {markers.map((marker) => (
+              <li
+                key={marker.id}
+                className="text-gray-700 
+                flex items-center flex-row
+                "
+              >
+                {marker.lat}, {marker.lng}
+                <IconButton
+                  onClick={() => {
+                    setMarkers(
+                      markers.filter(
+                        (m) => m.lat !== marker.lat && m.lng !== marker.lng
+                      )
+                    );
+                  }}
+                  size="small"
+                  className="ml-2"
+                >
+                  <AiOutlineCloseSquare />
+                </IconButton>
+              </li>
+            ))}
+            <Button disabled={markers.length === 0} onClick={sendCoordToServer}>
+              Set Orders List
+            </Button>
+          </ul>
+        </div>
         {markers.map((path, index) => (
           <Marker
             key={index}
