@@ -22,10 +22,11 @@ export default function TrackingPage() {
     console.log("data", data);
     return data;
   });
+  console.log("coooords", coords);
   return (
     <div>
       <Header />
-      {/* <GoogleMapCompoenentF /> */}
+      {isLoading ? <></> : <GoogleMapCompoenentF data={data} coords={coords} />}
     </div>
   );
 }
