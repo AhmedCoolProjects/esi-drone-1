@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useQuery } from "react-query";
 import { appAxios } from "../src/axios";
 import { GoogleMapCompoenentF, Header } from "../src/components";

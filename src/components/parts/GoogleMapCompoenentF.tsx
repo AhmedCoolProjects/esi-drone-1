@@ -66,10 +66,10 @@ const options = {
 };
 
 const onLoad1 = (polygon) => {
-  // console.log("polygon: ", polygon);
+  console.log("polygon: ", polygon);
 };
 const onLoad2 = (marker) => {
-  // console.log("marker: ", marker);
+  console.log("marker: ", marker);
 };
 
 function GoogleMapCompoenent({ data, coords }) {
