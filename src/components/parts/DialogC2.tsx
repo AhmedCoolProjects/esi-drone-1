@@ -5,6 +5,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { useAppSelector } from "../../store";
+import Link from "next/link";
 
 type props = {
   open: boolean;
@@ -16,9 +17,6 @@ export function DialogC2(props: props) {
   const { open, onClose, title } = props;
   const coords = useAppSelector((state) => state.coords.coords);
 
-  const getOptimalPath = () => {
-    console.log("getOptimalPath");
-  };
   return (
     <Dialog
       fullWidth
@@ -40,9 +38,9 @@ export function DialogC2(props: props) {
         <Button onClick={onClose} autoFocus>
           Cancel
         </Button>
-        <Button onClick={getOptimalPath} autoFocus>
-          Send
-        </Button>
+        <Link href="/track" passHref>
+          <Button autoFocus>Send</Button>
+        </Link>
       </DialogActions>
     </Dialog>
   );
