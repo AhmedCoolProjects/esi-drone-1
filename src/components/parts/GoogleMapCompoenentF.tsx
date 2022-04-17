@@ -96,7 +96,7 @@ function GoogleMapCompoenent({ data, coords }) {
 
   const sortCoordsUsingDataOrder = (coords) => {
     const sortedCoords = [];
-    for (let i = 0; i < dataOrder.length - 1; i++) {
+    for (let i = 0; i < dataOrder.length; i++) {
       const index = dataOrder[i];
       sortedCoords.push(coords[index]);
     }
@@ -116,6 +116,9 @@ function GoogleMapCompoenent({ data, coords }) {
       //   console.log("yo yo yo: ", event.latLng.lat(), event.latLng.lng());
       // }}
     >
+      <div className="absolute">
+        <h1 className="text-semibold lef">Distance: {data[1]}</h1>
+      </div>
       <Polygon
         onLoad={onLoad1}
         paths={sortCoordsUsingDataOrder(coords)}
@@ -126,7 +129,7 @@ function GoogleMapCompoenent({ data, coords }) {
           <Marker
             key={index}
             animation={
-              index % 2 === 0
+              index !== 0
                 ? window.google.maps.Animation.DROP
                 : window.google.maps.Animation.BOUNCE
             }
